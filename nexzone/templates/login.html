@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexZone — Iniciar sesión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { background: #09090b; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white antialiased">
+
+    <div class="w-full max-w-md px-6">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#e50914] text-2xl font-bold mb-4">
+                NZ
+            </div>
+            <h1 class="text-3xl font-semibold tracking-tight">NexZone</h1>
+            <p class="text-zinc-400 mt-1">Panel de Administración</p>
+        </div>
+
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
+            <h2 class="text-xl font-medium mb-1">Bienvenido de nuevo</h2>
+            <p class="text-sm text-zinc-400 mb-6">Ingresa tus credenciales para continuar</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="mb-4 px-4 py-3 rounded-xl text-sm
+                            {% if category == 'error' %}bg-red-500/10 text-red-400 border border-red-500/20
+                            {% elif category == 'success' %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
+                            {% else %}bg-zinc-800 text-zinc-300{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('auth.login') }}" class="space-y-5">
+                <div>
+                    <label class="block text-sm text-zinc-400 mb-1.5">Correo electrónico</label>
+                    <input type="email" name="email" required
+                           class="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-700 focus:border-[#e50914] focus:outline-none transition-colors"
+                           placeholder="frank@nexzone.com" value="frank@nexzone.com">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-zinc-400 mb-1.5">Contraseña</label>
+                    <input type="password" name="password" required
+                           class="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-700 focus:border-[#e50914] focus:outline-none transition-colors"
+                           placeholder="••••••••" value="admin123">
+                </div>
+
+                <button type="submit"
+                        class="w-full py-3 rounded-xl bg-[#e50914] hover:bg-[#f6121d] font-medium transition-colors">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <p class="mt-6 text-center text-xs text-zinc-500">
+                Usuario de prueba: frank@nexzone.com / admin123
+            </p>
+        </div>
+
+        <p class="mt-8 text-center text-xs text-zinc-600">
+            Proyecto universitario • 2026
+        </p>
+    </div>
+
+</body>
+</html>
